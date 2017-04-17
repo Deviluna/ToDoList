@@ -8,12 +8,15 @@
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <wutools.h>
+#include <missiondetaildialog.h>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    setWindowTitle("ToDoList");
+    //setWindowFlags(Qt::FramelessWindowHint);
     getMissonPath();
     loadMission();
 }
@@ -34,10 +37,9 @@ void MainWindow::on_pushButton_clicked()
 void MainWindow::loadMission(){
     ui->listWidget->clear();
     json=WuTools::getJsonObject(missionPath);
-    jsonArray=json.value("missions").toArray();
-    qDebug()<<jsonArray;
-    for(int i=0;i<jsonArray.size();i++){
-        QJsonObject lsJson=jsonArray.at(i).toObject();
+    missionArray=json.value("missions").toArray();
+    for(int i=0;i<missionArray.size();i++){
+        QJsonObject lsJson=missionArray.at(i).toObject();
         ui->listWidget->addItem(lsJson.value("name").toString());
     }
 }
@@ -51,10 +53,37 @@ void MainWindow::addMisson(QStringList mission){
     QJsonObject newJson;
     newJson.insert("name",mission[0]);
     newJson.insert("detail",mission[1]);
-    jsonArray.push_back(newJson);
-    json.remove("missions");
-    json.insert("missions",jsonArray);
+    missionArray.push_back(newJson);
+    json.insert("missions",missionArray);
     WuTools::outputFile(missionPath,QJsonDocument(json).toJson());
     loadMission();
 }
+
+
+void MainWindow::on_listWidget_doubleClicked(const QModelIndex &index)
+{
+    MissionDetailDialog *mdd=new MissionDetailDialog(this);
+    QStringList strList;
+    strList<<missionArray.at(index.row()).toObject().value("name").toString();
+    strList<<missionArray.at(index.row()).toObject().value("detail").toString();
+    mdd->loadMission(strList);
+    if(mdd->exec()){
+    completeMissionAt(index.row());
+    }
+}
+
+void MainWindow::removeMissionAt(int pos){f
+    missionArray.removeAt(pos);
+    ui->listWidget->takeItem(pos);
+    json.insert("missions",missionArray);
+    WuTools::outputFile(missionPath,QJsonDocument(json).toJson());
+}
+
+void MainWindow::completeMissionAt(int pos){
+    QJsonObject missionInfo=missionArray.at(pos).toObject();
+    completeArray.push_back(missionInfo);
+    json.insert("complete",completeArray);
+    removeMissionAt(pos);
+}
+
 

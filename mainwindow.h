@@ -21,6 +21,8 @@ public:
 private slots:
     void on_pushButton_clicked();
 
+    void on_listWidget_doubleClicked(const QModelIndex &index);
+
 private:
     Ui::MainWindow *ui;
     void openMissonDialog();
@@ -28,7 +30,10 @@ private:
     void loadMission();
     void getMissonPath();
     QJsonObject json;
-    QJsonArray jsonArray;
+    QJsonArray missionArray;
+    QJsonArray completeArray;
+    void removeMissionAt(int pos);
+    void completeMissionAt(int pos);
 };
 
 #endif // MAINWINDOW_H

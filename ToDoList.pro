@@ -26,11 +26,14 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += main.cpp\
         mainwindow.cpp \
     addmissondialog.cpp \
-    wutools.cpp
+    wutools.cpp \
+    missiondetaildialog.cpp
 
 HEADERS  += mainwindow.h \
     addmissondialog.h \
-    wutools.h
+    wutools.h \
+    missiondetaildialog.h
 
 FORMS    += mainwindow.ui \
-    addmissondialog.ui
+    addmissondialog.ui \
+    missiondetaildialog.ui
