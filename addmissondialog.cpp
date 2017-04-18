@@ -36,3 +36,5 @@ bool AddMissonDialog::addMission(){
     close();
     return true;
 }
+
+

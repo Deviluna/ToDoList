@@ -80,6 +80,7 @@ void MainWindow::addMisson(QStringList mission){
 
 void MainWindow::on_listWidget_doubleClicked(const QModelIndex &index)
 {
+    missionIndex = index.row();
     MissionDetailDialog *mdd=new MissionDetailDialog(this);
     QStringList strList;
     strList<<missionArray.at(index.row()).toObject().value("name").toString();
@@ -104,9 +105,16 @@ void MainWindow::completeMissionAt(int pos){
     removeMissionAt(pos);
 }
 void MainWindow::editMissionAt(int pos){
+    QJsonObject missionInfo=missionArray.at(pos).toObject();
+    MissionDetailDialog *mdd = new MissionDetailDialog(this);
+    QString detail = mdd->getTextValue();
+    completeArray.push_back(missionInfo);
+    json.insert("complete",completeArray);
+    WuTools::outputFile(missionPath,QJsonDocument(json).toJson());
+}
 
-
-
+void MainWindow::commitMission(){
+    editMissionAt(missionIndex);
 }
 
 

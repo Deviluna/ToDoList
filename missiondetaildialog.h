@@ -15,6 +15,7 @@ public:
     explicit MissionDetailDialog(QWidget *parent = 0);
     ~MissionDetailDialog();
     void loadMission(QStringList strList);
+    QString getTextValue();
 
 private slots:
     void on_pushButton_clicked();

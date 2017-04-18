@@ -15,6 +15,7 @@ public:
     explicit AddMissonDialog(QWidget *parent = 0);
     ~AddMissonDialog();
 
+
 private slots:
     void on_pushButton_2_clicked();
 

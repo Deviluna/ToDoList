@@ -18,6 +18,7 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
     void addMisson(QStringList misson);
+    void commitMission();
 
 private slots:
     void on_pushButton_clicked();
@@ -30,6 +31,7 @@ private:
     Ui::MainWindow *ui;
 
     QString missionPath;
+    int missionIndex;
 
     QJsonObject json;
 

@@ -1,5 +1,6 @@
 #include "missiondetaildialog.h"
 #include "ui_missiondetaildialog.h"
+#include <MainWindow.cpp>
 
 MissionDetailDialog::MissionDetailDialog(QWidget *parent) :
     QDialog(parent),
@@ -15,7 +16,8 @@ MissionDetailDialog::~MissionDetailDialog()
 
 void MissionDetailDialog::on_pushButton_clicked()
 {
-
+    MainWindow *mw = new MainWindow(this);
+    mw->commitMission();
     QDialog::accept();
 
 }
@@ -23,4 +25,9 @@ void MissionDetailDialog::on_pushButton_clicked()
 void MissionDetailDialog::loadMission(QStringList strList){
     ui->label->setText(strList[0]);
     ui->textBrowser->setText(strList[1]);
+}
+
+QString MissionDetailDialog::getTextValue(){
+    QString textValue = ui->textBrowser->toPlainText();
+    return textValue;
 }
