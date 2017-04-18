@@ -18,18 +18,17 @@
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <widget class="QLabel" name="label">
+       <property name="font">
+        <font>
+         <family>Arial</family>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>TextLabel</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QToolButton" name="toolButton">
-       <property name="text">
-        <string>编辑</string>
        </property>
       </widget>
      </item>
@@ -40,6 +39,11 @@
    </item>
    <item>
     <widget class="QPushButton" name="pushButton">
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+      </font>
+     </property>
      <property name="text">
       <string>完成</string>
      </property>

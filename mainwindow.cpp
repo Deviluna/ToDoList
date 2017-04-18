@@ -9,6 +9,7 @@
 #include <QJsonDocument>
 #include <wutools.h>
 #include <missiondetaildialog.h>
+#include <QMenu>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -19,11 +20,28 @@ MainWindow::MainWindow(QWidget *parent) :
     //setWindowFlags(Qt::FramelessWindowHint);
     getMissonPath();
     loadMission();
+    setListWidgetMenu();
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::setListWidgetMenu(){
+    ui->listWidget->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(ui->listWidget, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(ShowContextMenu(const QPoint&)));
+}
+
+void MainWindow::ShowContextMenu(const QPoint &){
+    //目前的问题，右键到了没有任务的地方也会弹出菜单。
+    QMenu *menu=new QMenu(this);
+    nowIndex=ui->listWidget->currentIndex();
+    qDebug()<<nowIndex;
+    menu->addAction("关闭",this,SLOT(close()));
+    menu->addSeparator();
+    menu->exec(QCursor::pos());
+
 }
 void MainWindow::getMissonPath(){
     QDir qdir;
@@ -72,7 +90,7 @@ void MainWindow::on_listWidget_doubleClicked(const QModelIndex &index)
     }
 }
 
-void MainWindow::removeMissionAt(int pos){f
+void MainWindow::removeMissionAt(int pos){
     missionArray.removeAt(pos);
     ui->listWidget->takeItem(pos);
     json.insert("missions",missionArray);
@@ -85,5 +103,12 @@ void MainWindow::completeMissionAt(int pos){
     json.insert("complete",completeArray);
     removeMissionAt(pos);
 }
+void MainWindow::editMissionAt(int pos){
+
+
+
+}
+
+
 
 
